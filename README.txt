@@ -5,7 +5,7 @@ Task Manager API — это REST API для управления задачам�
 
 ## Запуск
 1. Склонируйте репозиторий:
-   git clone https://github.com/....................
+   https://github.com/KirillTikholoz/EffectiveMobileTestTask
 
 2. Перейдите в директорию с проектом:
    cd path/to/project
