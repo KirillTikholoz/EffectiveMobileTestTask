@@ -5,12 +5,15 @@ import org.example.entities.Role;
 import org.example.entities.User;
 import org.example.exceptions.PasswordMismatchException;
 import org.example.exceptions.UserAlreadyExistsException;
+import org.example.mappers.impl.UserMapper;
 import org.example.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,6 +33,8 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private RoleService roleService;
+    @Spy
+    private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     @InjectMocks
     private UserService userService;
 

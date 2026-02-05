@@ -6,6 +6,7 @@ import org.example.entities.Role;
 import org.example.entities.User;
 import org.example.exceptions.PasswordMismatchException;
 import org.example.exceptions.UserAlreadyExistsException;
+import org.example.mappers.impl.UserMapper;
 import org.example.repositories.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ import java.util.NoSuchElementException;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
     private final RoleService roleService;
 
     private void createNewUser(RegistrationUserDto registrationUserDto, Role role){
@@ -36,8 +38,7 @@ public class UserService implements UserDetailsService {
             throw new PasswordMismatchException("Пароли не совпадают");
         }
 
-        User newUser = new User();
-        newUser.setEmail(registrationUserDto.getEmail());
+        User newUser = userMapper.toEntity(registrationUserDto);
         newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         newUser.setRoles(List.of(role));
         userRepository.save(newUser);
