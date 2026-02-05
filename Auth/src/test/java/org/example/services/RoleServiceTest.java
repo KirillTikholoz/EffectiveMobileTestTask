@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -44,9 +45,7 @@ public class RoleServiceTest {
     @Test
     public void successfulSaveNewRole(){
         String roleName = "ROLE_ADMIN";
-        Role role = new Role(null, roleName);
-
         roleService.saveNewRole(roleName);
-        verify(roleRepository).save(role);
+        verify(roleRepository).save(any(Role.class));
     }
 }

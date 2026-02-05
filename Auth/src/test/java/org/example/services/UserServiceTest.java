@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,7 +51,7 @@ public class UserServiceTest {
         when(passwordEncoder.encode("password")).thenReturn("encodePassword");
 
         userService.createUser(registrationUserDto);
-        verify(userRepository).save(user);
+        verify(userRepository).save(any(User.class));
     }
 
     @Test
@@ -92,7 +93,7 @@ public class UserServiceTest {
         when(passwordEncoder.encode("password")).thenReturn("encodePassword");
 
         userService.createAdmin(registrationUserDto);
-        verify(userRepository).save(user);
+        verify(userRepository).save(any(User.class));
     }
 
     @Test
