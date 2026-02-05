@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -42,11 +43,13 @@ public class UserService implements UserDetailsService {
         userRepository.save(newUser);
     }
 
+    @Transactional
     public void createUser(RegistrationUserDto registrationUserDto){
         createNewUser(registrationUserDto, roleService.getUserRole().orElseThrow(() ->
                 new NoSuchElementException("Данной роли не существует")));
     }
 
+    @Transactional
     public void createAdmin(RegistrationUserDto userDto){
         createNewUser(userDto, roleService.getAdminRole().orElseThrow(() ->
                 new NoSuchElementException("Данной роли не существует")));

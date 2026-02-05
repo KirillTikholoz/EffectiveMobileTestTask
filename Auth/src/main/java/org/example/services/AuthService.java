@@ -2,6 +2,7 @@ package org.example.services;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.dtos.JwtResponse;
 import org.example.utils.JwtTokenUtils;
@@ -27,6 +28,7 @@ public class AuthService {
         response.addCookie(refreshTokenCookie);
     }
 
+    @Transactional
     public ResponseEntity<JwtResponse> createJwtTokens(String email){
         UserDetails userDetails = userService.loadUserByUsername(email);
 
@@ -37,6 +39,7 @@ public class AuthService {
         return new ResponseEntity<>(new JwtResponse(accessToken), HttpStatus.OK);
     }
 
+    @Transactional
     public ResponseEntity<JwtResponse> refreshJwtTokens(String refreshToken){
         String email = jwtTokenUtils.getEmailFromRefreshToken(refreshToken);
         return createJwtTokens(email);
