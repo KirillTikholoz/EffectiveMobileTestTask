@@ -34,6 +34,8 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: root
       DB_DRIVER: jdbc:postgresql
+      ACCESS_KEY: fgsdffsg456456rertr66yerty56465sdfmk68poiopz
+      REFRESH_KEY: sssdffsg456456rertr66yerty589898ghtrcop9741b
 
 #  -----------------------------------
   task_manager_db:
