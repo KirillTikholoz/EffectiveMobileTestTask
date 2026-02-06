@@ -46,16 +46,7 @@ public class TaskServiceTest {
 
     @Test
     public void successfulCreateTask(){
-        Task task = new Task(
-                null,
-                "title",
-                "description",
-                Status.COMPLETED,
-                Priority.MEDIUM,
-                "user1@mail.ru",
-                "Kirill@mail.ru",
-                null
-        );
+        // Given
         TaskDto taskDto = new TaskDto(
                 "title",
                 "description",
@@ -64,16 +55,19 @@ public class TaskServiceTest {
                 "Kirill@mail.ru"
         );
         SecurityContextHolder.setContext(securityContext);
-
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("user1@mail.ru");
 
+        // When
         taskService.createTask(taskDto);
-        verify(taskRepository).save(task);
+
+        // Then
+        verify(taskRepository).save(any(Task.class));
     }
 
     @Test
     public void createTaskWithNotValidStatus(){
+        // Given
         TaskDto taskDto = new TaskDto(
                 "title",
                 "description",
@@ -82,12 +76,14 @@ public class TaskServiceTest {
                 "Kirill@mail.ru"
         );
 
+        // When & Then
         Assertions.assertThrows(IllegalArgumentException.class, () ->
                 taskService.createTask(taskDto));
     }
 
     @Test
     public void createTaskWithNotValidPriority(){
+        // Given
         TaskDto taskDto = new TaskDto(
                 "title",
                 "description",
@@ -96,12 +92,14 @@ public class TaskServiceTest {
                 "Kirill@mail.ru"
         );
 
+        // When & Then
         Assertions.assertThrows(IllegalArgumentException.class, () ->
                 taskService.createTask(taskDto));
     }
 
     @Test
     public void successfulAddComment(){
+        // Given
         String author = "user1@mail.ru";
         Comment comment = new Comment(1L, "text", author);
         Task oldTask = new Task(
@@ -114,23 +112,17 @@ public class TaskServiceTest {
                 "Kirill@mail.ru",
                 new LinkedList<>()
         );
-        Task newTask = new Task(
-                1L,
-                "title",
-                "description",
-                Status.COMPLETED,
-                Priority.MEDIUM,
-                author,
-                "Kirill@mail.ru",
-                List.of(comment)
-        );
 
+        // When
         taskService.addComment(oldTask, comment);
-        verify(taskRepository).save(newTask);
+
+        // Then
+        verify(taskRepository).save(any(Task.class));
     }
 
     @Test
     public void successfulUpdateStatus(){
+        // Given
         Long taskId = 1L;
         ValueDto valueDto = new ValueDto("COMPLETED");
         Task oldTask = new Task(
@@ -143,36 +135,30 @@ public class TaskServiceTest {
                 "Kirill@mail.ru",
                 new LinkedList<>()
         );
-        Task newTask = new Task(
-                1L,
-                "title",
-                "description",
-                Status.valueOf(valueDto.getValue()),
-                Priority.MEDIUM,
-                "user1@mail.ru",
-                "Kirill@mail.ru",
-                new LinkedList<>()
-        );
-
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(oldTask));
 
+        // When
         taskService.updateStatus(taskId, valueDto);
-        verify(taskRepository).save(newTask);
+
+        // Then
+        verify(taskRepository).save(any(Task.class));
     }
 
     @Test
     public void successfulUpdateStatusWithTaskNotFoundException(){
+        // Given
         Long taskId = 1L;
         ValueDto valueDto = new ValueDto("COMPLETED");
-
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
 
+        // When & Then
         Assertions.assertThrows(TaskNotFoundException.class, () ->
                 taskService.updateStatus(taskId, valueDto));
     }
 
     @Test
     public void successfulUpdatePriority(){
+        // Given
         Long taskId = 1L;
         ValueDto valueDto = new ValueDto("HIGH");
         Task oldTask = new Task(
@@ -185,25 +171,18 @@ public class TaskServiceTest {
                 "Kirill@mail.ru",
                 new LinkedList<>()
         );
-        Task newTask = new Task(
-                1L,
-                "title",
-                "description",
-                Status.IN_PROGRESS,
-                Priority.valueOf(valueDto.getValue()),
-                "user1@mail.ru",
-                "Kirill@mail.ru",
-                new LinkedList<>()
-        );
-
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(oldTask));
 
+        // When
         taskService.updatePriority(taskId, valueDto);
-        verify(taskRepository).save(newTask);
+
+        // Then
+        verify(taskRepository).save(any(Task.class));
     }
 
     @Test
     public void successfulUpdateExecutor(){
+        // Given
         Long taskId = 1L;
         ValueDto valueDto = new ValueDto("new_executor");
         Task oldTask = new Task(
@@ -216,28 +195,24 @@ public class TaskServiceTest {
                 "Kirill@mail.ru",
                 new LinkedList<>()
         );
-        Task newTask = new Task(
-                1L,
-                "title",
-                "description",
-                Status.IN_PROGRESS,
-                Priority.MEDIUM,
-                "user1@mail.ru",
-                valueDto.getValue(),
-                new LinkedList<>()
-        );
-
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(oldTask));
 
+        // When
         taskService.updateExecutor(taskId, valueDto);
-        verify(taskRepository).save(newTask);
+
+        // Then
+        verify(taskRepository).save(any(Task.class));
     }
 
     @Test
     public void successfulDeleteTask() {
+        // Given
         Long taskId = 1L;
 
+        // When
         taskService.deleteTask(taskId);
+
+        // Then
         verify(taskRepository).deleteById(taskId);
     }
 

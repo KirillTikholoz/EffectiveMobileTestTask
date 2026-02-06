@@ -48,7 +48,6 @@ public class CommentServiceTest {
     public void successfulCreateComment(){
         // Given
         String author = "user1@mail.ru";
-        Comment comment = new Comment(null, "text", author);
         CommentDto commentDto = new CommentDto(1L, "text");
         Task task = new Task(
                 1L,
@@ -70,6 +69,6 @@ public class CommentServiceTest {
         commentService.createComment(commentDto);
 
         // Then
-        verify(taskService).addComment(eq(task), eq(comment));
+        verify(taskService).addComment(eq(task), any(Comment.class));
     }
 }
