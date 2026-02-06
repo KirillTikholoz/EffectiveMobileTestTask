@@ -47,6 +47,12 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
+    public TaskResponseDto readTaskDto(Long id){
+        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found"));
+        return taskMapper.toDto(task);
+    }
+
+    @Transactional(readOnly = true)
     public List<TaskResponseDto> getTasksByFilter(TaskFilter filter, int page, int size) {
         return filterTaskRepository.findTaskByFilter(filter, page, size);
     }

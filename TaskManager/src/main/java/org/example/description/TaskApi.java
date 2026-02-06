@@ -32,11 +32,11 @@ public interface TaskApi {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get task",
-                    content = @Content(schema = @Schema(implementation = Task.class))),
+                    content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Task not found",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    public ResponseEntity<Task> getTaskHandler(@PathVariable("task_id") Long taskId);
+    public ResponseEntity<TaskResponseDto> getTaskHandler(@PathVariable("task_id") Long taskId);
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get tasks",

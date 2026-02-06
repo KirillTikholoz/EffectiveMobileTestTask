@@ -8,7 +8,6 @@ import org.example.dtos.request.TaskDto;
 import org.example.dtos.request.ValueDto;
 import org.example.dtos.filter.TaskFilter;
 import org.example.dtos.response.TaskResponseDto;
-import org.example.entitis.Task;
 import org.example.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +33,9 @@ public class TaskController implements TaskApi {
     }
 
     @GetMapping("/{task_id}")
-    public ResponseEntity<Task> getTaskHandler(@PathVariable("task_id") Long taskId) {
-        Task task = taskService.readTask(taskId);
-        return new ResponseEntity<>(task, HttpStatus.OK);
+    public ResponseEntity<TaskResponseDto> getTaskHandler(@PathVariable("task_id") Long taskId) {
+        TaskResponseDto taskResponseDto = taskService.readTaskDto(taskId);
+        return new ResponseEntity<>(taskResponseDto, HttpStatus.OK);
     }
 
     @PostMapping("/filter")
