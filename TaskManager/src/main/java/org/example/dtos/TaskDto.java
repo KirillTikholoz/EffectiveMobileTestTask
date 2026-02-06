@@ -11,12 +11,16 @@ import lombok.NoArgsConstructor;
 public class TaskDto {
     @NotEmpty
     private String title;
+
     @NotEmpty
     private String description;
+
     @NotEmpty
     private String status;
+
     @NotEmpty
     private String priority;
+
     @NotEmpty
     private String executor;
 }

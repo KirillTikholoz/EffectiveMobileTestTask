@@ -14,6 +14,7 @@ public class CommentDto {
     @Positive
     @JsonProperty("task_id")
     private Long taskId;
+
     @NotEmpty
     private String text;
 }
