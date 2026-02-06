@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.mappers.impl.TaskMapper;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.dtos.*;
@@ -21,21 +22,13 @@ import org.springframework.stereotype.Service;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final UserPermissionChecker userPermissionChecker;
-
-    private void saveTask(Task task, TaskDto taskDto){
-        task.setTitle(taskDto.getTitle());
-        task.setDescription(taskDto.getDescription());
-        task.setStatus(Status.valueOf(taskDto.getStatus().toUpperCase()));
-        task.setPriority(Priority.valueOf(taskDto.getPriority().toUpperCase()));
-        task.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
-        task.setExecutor(taskDto.getExecutor());
-        taskRepository.save(task);
-    }
+    private final TaskMapper taskMapper;
 
     @Transactional
     public void createTask(TaskDto taskDto){
-        Task task = new Task();
-        saveTask(task, taskDto);
+        Task task = taskMapper.toEntity(taskDto);
+        task.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
+        taskRepository.save(task);
     }
 
     @Transactional
@@ -66,7 +59,9 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
-        saveTask(task, taskDto);
+        taskMapper.updateFromDto(taskDto, task);
+        task.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
+        taskRepository.save(task);
     }
 
     @Transactional

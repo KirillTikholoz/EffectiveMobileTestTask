@@ -7,13 +7,17 @@ import org.example.entitis.Task;
 import org.example.enums.Priority;
 import org.example.enums.Status;
 import org.example.exception.TaskNotFoundException;
+import org.example.mappers.impl.CommentMapper;
+import org.example.mappers.impl.TaskMapper;
 import org.example.repositories.TaskRepository;
 import org.example.utils.UserPermissionChecker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -35,6 +39,8 @@ public class TaskServiceTest {
     private Authentication authentication;
     @Mock
     private SecurityContext securityContext;
+    @Spy
+    private TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
     @InjectMocks
     private TaskService taskService;
 

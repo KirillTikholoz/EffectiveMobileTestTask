@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.mappers.impl.CommentMapper;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.dtos.CommentDto;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Isolation;
 public class CommentService {
     private final TaskService taskService;
     private final UserPermissionChecker userPermissionChecker;
+    private final CommentMapper commentMapper;
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void createComment(CommentDto commentDto){
@@ -22,8 +24,7 @@ public class CommentService {
 
         userPermissionChecker.checkUserPermissions(task);
 
-        Comment comment = new Comment();
-        comment.setText(commentDto.getText());
+        Comment comment = commentMapper.toEntity(commentDto);
         comment.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
         taskService.addComment(task, comment);
     }
