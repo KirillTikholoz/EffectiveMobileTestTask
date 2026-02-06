@@ -50,7 +50,7 @@ services:
       POSTGRES_DB: EffectiveMobileTaskManager
       PGPORT: 5433
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: [ "CMD-SHELL", "pg_isready -U root -d EffectiveMobileTaskManager" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -69,5 +69,7 @@ services:
       DB_HOST: task_manager_db
       DB_PORT: 5433
       DB_NAME: EffectiveMobileTaskManager
-      DB_USER: context
-      DB_PASSWORD: context
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_DRIVER: jdbc:postgresql
+      ACCESS_KEY: fgsdffsg456456rertr66yerty56465sdfmk68poiopz

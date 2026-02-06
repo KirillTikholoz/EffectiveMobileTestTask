@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://task_manager_db:5433/EffectiveMobileTaskManager
-    username: root
-    password: root
+    url: ${DB_DRIVER}://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,4 +16,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
-  secret-access-key: fgsdffsg456456rertr66yerty56465sdfmk68poiopz
+  secret-access-key: ${ACCESS_KEY}
