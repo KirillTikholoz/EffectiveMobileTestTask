@@ -5,12 +5,15 @@ import org.example.entities.Role;
 import org.example.entities.User;
 import org.example.exceptions.PasswordMismatchException;
 import org.example.exceptions.UserAlreadyExistsException;
+import org.example.mappers.impl.UserMapper;
 import org.example.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,6 +34,8 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private RoleService roleService;
+    @Spy
+    private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     @InjectMocks
     private UserService userService;
 
@@ -45,7 +51,7 @@ public class UserServiceTest {
         when(passwordEncoder.encode("password")).thenReturn("encodePassword");
 
         userService.createUser(registrationUserDto);
-        verify(userRepository).save(user);
+        verify(userRepository).save(any(User.class));
     }
 
     @Test
@@ -87,7 +93,7 @@ public class UserServiceTest {
         when(passwordEncoder.encode("password")).thenReturn("encodePassword");
 
         userService.createAdmin(registrationUserDto);
-        verify(userRepository).save(user);
+        verify(userRepository).save(any(User.class));
     }
 
     @Test

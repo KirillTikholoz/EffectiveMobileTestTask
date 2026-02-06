@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://auth_db:5432/EffectiveMobileAuth
-    username: root
-    password: root
+    url: ${DB_DRIVER}://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,7 +16,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
-  secret-access-key: fgsdffsg456456rertr66yerty56465sdfmk68poiopz
-  secret-refresh-key: sssdffsg456456rertr66yerty589898ghtrcop9741b
+  secret-access-key: ${ACCESS_KEY}
+  secret-refresh-key: ${REFRESH_KEY}
   access-token-lifetime: 86_400_000 # Millis
   refresh-token-lifetime: 604_800_000 # Millis
