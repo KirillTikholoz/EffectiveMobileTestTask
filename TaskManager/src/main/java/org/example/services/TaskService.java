@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.dtos.*;
 import org.example.entitis.Comment;
@@ -31,30 +32,36 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    @Transactional
     public void createTask(TaskDto taskDto){
         Task task = new Task();
         saveTask(task, taskDto);
     }
 
+    @Transactional
     public void addComment(Task task, Comment comment){
         task.getComments().add(comment);
         taskRepository.save(task);
     }
 
+    @Transactional(readOnly = true)
     public Task readTask(Long id){
         return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found"));
     }
 
+    @Transactional(readOnly = true)
     public Page<Task> getTasksByAuthor(String author, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return taskRepository.findByAuthor(author, pageable);
     }
 
+    @Transactional(readOnly = true)
     public Page<Task> getTasksByExecutor(String executor, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return taskRepository.findByExecutor(executor, pageable);
     }
 
+    @Transactional
     public void updateTask(Long taskId, TaskDto taskDto){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -62,6 +69,7 @@ public class TaskService {
         saveTask(task, taskDto);
     }
 
+    @Transactional
     public void updateStatus(Long taskId, ValueDto valueDto){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -72,6 +80,7 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    @Transactional
     public void updatePriority(Long taskId, ValueDto valueDto){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -80,6 +89,7 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    @Transactional
     public void updateExecutor(Long taskId, ValueDto valueDto){
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -88,6 +98,7 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    @Transactional
     public void deleteTask(Long id){
         taskRepository.deleteById(id);
     }
