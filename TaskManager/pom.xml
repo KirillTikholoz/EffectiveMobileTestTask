@@ -78,6 +78,11 @@
       <artifactId>mapstruct</artifactId>
       <version>1.5.5.Final</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jooq</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -103,6 +108,30 @@
               <version>1.5.5.Final</version>
             </path>
           </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-codegen-maven</artifactId>
+        <configuration>
+          <jdbc>
+            <!-- Эти переменные окружения берутся из .mvn/maven.config-->
+            <driver>org.postgresql.Driver</driver>
+            <url>${DB_DRIVER}://${DB_HOST}:${DB_PORT}/${DB_NAME}</url>
+            <user>${DB_USERNAME}</user>
+            <password>${DB_PASSWORD}</password>
+          </jdbc>
+            <generator>
+              <database>
+                <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                <inputSchema>${DB_SCHEMA}</inputSchema>
+              </database>
+              <target>
+                <packageName>org.example.generated.jooq</packageName>
+                <directory>src/main/java</directory>
+              </target>
+            </generator>
         </configuration>
       </plugin>
 

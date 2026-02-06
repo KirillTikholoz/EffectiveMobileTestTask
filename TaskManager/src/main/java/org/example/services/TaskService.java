@@ -1,6 +1,10 @@
 package org.example.services;
 
+import org.example.dtos.filter.TaskFilter;
+import org.example.dtos.response.TaskResponseDto;
+import org.example.generated.jooq.tables.records.TaskRecord;
 import org.example.mappers.impl.TaskMapper;
+import org.example.repositories.FilterTaskRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.dtos.*;
@@ -17,10 +21,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final FilterTaskRepository filterTaskRepository;
     private final UserPermissionChecker userPermissionChecker;
     private final TaskMapper taskMapper;
 
@@ -43,15 +50,8 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Task> getTasksByAuthor(String author, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return taskRepository.findByAuthor(author, pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<Task> getTasksByExecutor(String executor, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return taskRepository.findByExecutor(executor, pageable);
+    public List<TaskResponseDto> getTasksByFilter(TaskFilter filter, int page, int size) {
+        return filterTaskRepository.findTaskByFilter(filter, page, size);
     }
 
     @Transactional

@@ -39,7 +39,7 @@ public class CommentServiceTest {
     private SecurityContext securityContext;
 
     @Spy
-    private CommentMapper commentMapper = Mappers.getMapper(CommentMapper.class);;
+    private CommentMapper commentMapper = Mappers.getMapper(CommentMapper.class);
 
     @InjectMocks
     private CommentService commentService;

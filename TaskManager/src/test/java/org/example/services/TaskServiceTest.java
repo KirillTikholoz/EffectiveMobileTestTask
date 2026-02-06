@@ -2,13 +2,14 @@ package org.example.services;
 
 import org.example.dtos.TaskDto;
 import org.example.dtos.ValueDto;
+import org.example.dtos.filter.TaskFilter;
 import org.example.entitis.Comment;
 import org.example.entitis.Task;
 import org.example.enums.Priority;
 import org.example.enums.Status;
 import org.example.exception.TaskNotFoundException;
-import org.example.mappers.impl.CommentMapper;
 import org.example.mappers.impl.TaskMapper;
+import org.example.repositories.FilterTaskRepository;
 import org.example.repositories.TaskRepository;
 import org.example.utils.UserPermissionChecker;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +25,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -33,6 +33,8 @@ import static org.mockito.Mockito.*;
 public class TaskServiceTest {
     @Mock
     private TaskRepository taskRepository;
+    @Mock
+    private FilterTaskRepository filterTaskRepository;
     @Mock
     private UserPermissionChecker userPermissionChecker;
     @Mock
@@ -215,5 +217,18 @@ public class TaskServiceTest {
         // Then
         verify(taskRepository).deleteById(taskId);
     }
+
+    @Test
+    public void successfulGetTasksByFilterHandler() {
+        // Given
+        TaskFilter taskFilter = new TaskFilter("author", "executor");
+
+        // When
+        taskService.getTasksByFilter(taskFilter, 0, 5);
+
+        // Then
+        verify(filterTaskRepository).findTaskByFilter(eq(taskFilter), anyInt(), anyInt());
+    }
+
 
 }

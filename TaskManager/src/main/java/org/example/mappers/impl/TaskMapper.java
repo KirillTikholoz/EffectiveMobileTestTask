@@ -1,15 +1,18 @@
 package org.example.mappers.impl;
 
 import org.example.dtos.TaskDto;
+import org.example.dtos.response.TaskResponseDto;
 import org.example.entitis.Task;
 import org.example.enums.Priority;
 import org.example.enums.Status;
 import org.example.mappers.MappableFromDto;
+import org.example.mappers.MappableToDto;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        uses = CommentMapper.class)
 public interface TaskMapper extends
-        MappableFromDto<TaskDto, Task>{
+        MappableFromDto<TaskDto, Task>, MappableToDto<Task, TaskResponseDto> {
 
     @Mapping(target = "author", ignore = true)
     @Mapping(target = "status", source = "status", qualifiedByName = "toStatus")
