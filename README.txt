@@ -1,7 +1,10 @@
 # Task Manager API
 
 ## Описание
-Task Manager API — это REST API для управления задачами, разворачиваемое с использованием Docker.
+Auth API — это REST API для аутентификации
+Task Manager API — это REST API для управления задачами
+
+Все разворачивается с использованием Docker и docker-compose.
 
 ## Запуск
 1. Склонируйте репозиторий:
