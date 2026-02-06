@@ -5,17 +5,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import org.example.dtos.ErrorResponseDto;
-import org.example.dtos.SuccessfulResponseDto;
-import org.example.dtos.TaskDto;
-import org.example.dtos.ValueDto;
+import org.example.dtos.response.ErrorResponseDto;
+import org.example.dtos.response.SuccessfulResponseDto;
+import org.example.dtos.request.TaskDto;
+import org.example.dtos.request.ValueDto;
+import org.example.dtos.filter.TaskFilter;
+import org.example.dtos.response.TaskResponseDto;
 import org.example.entitis.Task;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 public interface TaskApi {
     @ApiResponses(value = {
@@ -30,32 +32,20 @@ public interface TaskApi {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get task",
-                    content = @Content(schema = @Schema(implementation = Task.class))),
+                    content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Task not found",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    public ResponseEntity<Task> getTaskHandler(@PathVariable("task_id") Long taskId);
+    public ResponseEntity<TaskResponseDto> getTaskHandler(@PathVariable("task_id") Long taskId);
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get tasks",
-                    content = @Content(schema = @Schema(implementation = Page.class))),
+                    content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Incorrect data was transmitted",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    public Page<Task> getTasksByAuthorHandler(
-            @RequestParam @NotEmpty String author,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-    );
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully get tasks",
-                    content = @Content(schema = @Schema(implementation = Page.class))),
-            @ApiResponse(responseCode = "400", description = "Incorrect data was transmitted",
-                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
-    })
-    public Page<Task> getTasksByExecutorHandler(
-            @RequestParam @NotEmpty String executor,
+    public List<TaskResponseDto> getTasksByFilterHandler(
+            @RequestBody TaskFilter filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size
     );

@@ -1,19 +1,20 @@
 package org.example.controllers;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.example.description.TaskApi;
-import org.example.dtos.SuccessfulResponseDto;
-import org.example.dtos.TaskDto;
-import org.example.dtos.ValueDto;
-import org.example.entitis.Task;
+import org.example.dtos.response.SuccessfulResponseDto;
+import org.example.dtos.request.TaskDto;
+import org.example.dtos.request.ValueDto;
+import org.example.dtos.filter.TaskFilter;
+import org.example.dtos.response.TaskResponseDto;
 import org.example.services.TaskService;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,27 +33,18 @@ public class TaskController implements TaskApi {
     }
 
     @GetMapping("/{task_id}")
-    public ResponseEntity<Task> getTaskHandler(@PathVariable("task_id") Long taskId) {
-        Task task = taskService.readTask(taskId);
-        return new ResponseEntity<>(task, HttpStatus.OK);
+    public ResponseEntity<TaskResponseDto> getTaskHandler(@PathVariable("task_id") Long taskId) {
+        TaskResponseDto taskResponseDto = taskService.readTaskDto(taskId);
+        return new ResponseEntity<>(taskResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/author")
-    public Page<Task> getTasksByAuthorHandler(
-            @RequestParam @NotEmpty String author,
+    @PostMapping("/filter")
+    public List<TaskResponseDto> getTasksByFilterHandler(
+            @RequestBody TaskFilter filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size
     ) {
-        return taskService.getTasksByAuthor(author, page, size);
-    }
-
-    @GetMapping("/executor")
-    public Page<Task> getTasksByExecutorHandler(
-            @RequestParam @NotEmpty String executor,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-    ) {
-        return taskService.getTasksByExecutor(executor, page, size);
+        return taskService.getTasksByFilter(filter, page, size);
     }
 
     @PutMapping("/{task_id}")

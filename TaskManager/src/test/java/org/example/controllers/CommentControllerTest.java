@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.example.configs.SecurityConfig;
-import org.example.dtos.CommentDto;
+import org.example.dtos.request.CommentDto;
 import org.example.filters.JwtRequestFilter;
 import org.example.services.CommentService;
 import org.example.utils.JwtTokenUtils;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         JwtTokenUtils.class,
         GlobalExceptionHandler.class
 })
+@ActiveProfiles("test")
 public class CommentControllerTest {
     @Autowired
     private MockMvc mockMvc;

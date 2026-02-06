@@ -5,8 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.example.configs.SecurityConfig;
-import org.example.dtos.TaskDto;
-import org.example.dtos.ValueDto;
+import org.example.dtos.request.TaskDto;
+import org.example.dtos.request.ValueDto;
+import org.example.dtos.filter.TaskFilter;
 import org.example.exception.TaskNotFoundException;
 import org.example.exception.UserNotEnoughAuthorities;
 import org.example.filters.JwtRequestFilter;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -38,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         JwtTokenUtils.class,
         GlobalExceptionHandler.class
 })
+@ActiveProfiles("test")
 public class TaskControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -161,20 +164,18 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void successfulGetTasksByAuthorHandler() throws Exception {
-        mockMvc.perform(get("/tasks/author")
-                        .param("author", "user@mail.ru")
-                        .param("page", "0")
-                        .param("size", "5"))
-                .andExpect(status().isOk());
-    }
+    public void successfulGetTasksByFilterHandler() throws Exception {
+        TaskFilter taskFilter = new TaskFilter(
+                "author",
+                "executor"
+        );
+        String taskFilterJson = objectMapper.writeValueAsString(taskFilter);
 
-    @Test
-    public void successfulGetTasksByExecutorHandler() throws Exception {
-        mockMvc.perform(get("/tasks/author")
-                        .param("author", "user@mail.ru")
+        mockMvc.perform(post("/tasks/filter")
                         .param("page", "0")
-                        .param("size", "5"))
+                        .param("size", "5")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(taskFilterJson))
                 .andExpect(status().isOk());
     }
 

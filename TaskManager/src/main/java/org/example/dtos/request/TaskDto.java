@@ -1,4 +1,4 @@
-package org.example.dtos;
+package org.example.dtos.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -11,12 +11,16 @@ import lombok.NoArgsConstructor;
 public class TaskDto {
     @NotEmpty
     private String title;
+
     @NotEmpty
     private String description;
+
     @NotEmpty
     private String status;
+
     @NotEmpty
     private String priority;
+
     @NotEmpty
     private String executor;
 }

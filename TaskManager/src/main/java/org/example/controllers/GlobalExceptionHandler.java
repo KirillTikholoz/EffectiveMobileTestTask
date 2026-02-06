@@ -2,7 +2,7 @@ package org.example.controllers;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.example.dtos.ErrorResponseDto;
+import org.example.dtos.response.ErrorResponseDto;
 import org.example.exception.TaskNotFoundException;
 import org.example.exception.UserNotEnoughAuthorities;
 import org.springframework.http.HttpStatus;
