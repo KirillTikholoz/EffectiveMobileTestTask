@@ -1,6 +1,6 @@
 package org.example.mappers.impl;
 
-import org.example.dtos.TaskDto;
+import org.example.dtos.request.TaskDto;
 import org.example.dtos.response.TaskResponseDto;
 import org.example.entitis.Task;
 import org.example.enums.Priority;

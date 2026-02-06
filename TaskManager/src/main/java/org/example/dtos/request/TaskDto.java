@@ -1,4 +1,4 @@
-package org.example.dtos;
+package org.example.dtos.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

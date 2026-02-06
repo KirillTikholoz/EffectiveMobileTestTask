@@ -1,13 +1,13 @@
 package org.example.services;
 
 import org.example.dtos.filter.TaskFilter;
+import org.example.dtos.request.TaskDto;
+import org.example.dtos.request.ValueDto;
 import org.example.dtos.response.TaskResponseDto;
-import org.example.generated.jooq.tables.records.TaskRecord;
 import org.example.mappers.impl.TaskMapper;
 import org.example.repositories.FilterTaskRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.dtos.*;
 import org.example.entitis.Comment;
 import org.example.entitis.Task;
 import org.example.enums.Priority;
@@ -15,9 +15,6 @@ import org.example.enums.Status;
 import org.example.exception.TaskNotFoundException;
 import org.example.repositories.TaskRepository;
 import org.example.utils.UserPermissionChecker;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

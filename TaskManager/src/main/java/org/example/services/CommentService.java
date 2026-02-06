@@ -3,7 +3,7 @@ package org.example.services;
 import org.example.mappers.impl.CommentMapper;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.dtos.CommentDto;
+import org.example.dtos.request.CommentDto;
 import org.example.entitis.Comment;
 import org.example.entitis.Task;
 import org.example.utils.UserPermissionChecker;

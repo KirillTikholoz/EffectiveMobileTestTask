@@ -5,9 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.example.dtos.CommentDto;
-import org.example.dtos.ErrorResponseDto;
-import org.example.dtos.SuccessfulResponseDto;
+import org.example.dtos.request.CommentDto;
+import org.example.dtos.response.ErrorResponseDto;
+import org.example.dtos.response.SuccessfulResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 

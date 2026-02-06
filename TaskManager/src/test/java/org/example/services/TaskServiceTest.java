@@ -1,7 +1,7 @@
 package org.example.services;
 
-import org.example.dtos.TaskDto;
-import org.example.dtos.ValueDto;
+import org.example.dtos.request.TaskDto;
+import org.example.dtos.request.ValueDto;
 import org.example.dtos.filter.TaskFilter;
 import org.example.entitis.Comment;
 import org.example.entitis.Task;

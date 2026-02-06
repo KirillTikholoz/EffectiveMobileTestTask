@@ -1,6 +1,6 @@
 package org.example.mappers.impl;
 
-import org.example.dtos.CommentDto;
+import org.example.dtos.request.CommentDto;
 import org.example.dtos.response.CommentResponseDto;
 import org.example.entitis.Comment;
 import org.example.mappers.MappableFromDto;

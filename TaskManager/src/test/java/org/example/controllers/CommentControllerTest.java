@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.example.configs.SecurityConfig;
-import org.example.dtos.CommentDto;
+import org.example.dtos.request.CommentDto;
 import org.example.filters.JwtRequestFilter;
 import org.example.services.CommentService;
 import org.example.utils.JwtTokenUtils;
@@ -20,7 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 

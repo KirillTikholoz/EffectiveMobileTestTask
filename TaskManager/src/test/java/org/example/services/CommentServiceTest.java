@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.dtos.CommentDto;
+import org.example.dtos.request.CommentDto;
 import org.example.entitis.Comment;
 import org.example.entitis.Task;
 import org.example.enums.Priority;

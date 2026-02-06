@@ -1,4 +1,4 @@
-package org.example.dtos;
+package org.example.dtos.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
