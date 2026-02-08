@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.dtos.filter.TaskFilter;
 import org.example.dtos.response.CommentResponseDto;
 import org.example.dtos.response.TaskResponseDto;
-import org.example.enums.Priority;
-import org.example.enums.Status;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -26,12 +24,7 @@ public class FilterTaskRepository {
         Condition condition = buildTaskCondition(filter);
 
         return dslContext.select(
-                        TASK.TITLE,
-                        TASK.DESCRIPTION,
-                        TASK.STATUS.convertFrom(Status::valueOf),
-                        TASK.PRIORITY.convertFrom(Priority::valueOf),
-                        TASK.AUTHOR,
-                        TASK.EXECUTOR,
+                        TASK.asterisk(),
                         DSL.multiset(
                                 dslContext.selectFrom(COMMENT)
                                         .where(COMMENT.TASK_ID.eq(TASK.ID))
